@@ -1,0 +1,43 @@
+.button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: inherit;
+  line-height: inherit;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.success {
+  color: var(--moderate-blue);
+}
+
+.success:focus-visible {
+  color: var(--light-grayish-blue);
+}
+
+.danger {
+  color: var(--soft-red);
+}
+
+.danger:focus-visible {
+  color: var(--pale-red);
+}
+
+.button svg {
+  margin-right: 8px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .success:hover {
+    color: var(--light-grayish-blue);
+  }
+
+  .danger:hover {
+    color: var(--pale-red);
+  }
+}

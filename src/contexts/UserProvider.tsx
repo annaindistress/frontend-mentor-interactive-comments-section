@@ -4,8 +4,9 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 interface Context {
   currentUser: string;
   likedPosts: string[];
-  addLike(id: string): void;
-  removeLike(id: string): void;
+  dislikedPosts: string[];
+  addReaction(id: string, type: string): void;
+  removeReaction(id: string, type: string): void;
 }
 
 interface ProviderProps {
@@ -17,24 +18,52 @@ const UserContext = createContext<Context | null>(null);
 function UserProvider({ children }: ProviderProps) {
   const currentUser = "juliusomo";
   const [likedPosts, setLikedPosts] = useLocalStorage<string[]>([], "likes");
+  const [dislikedPosts, setDislikedPosts] = useLocalStorage<string[]>(
+    [],
+    "dislikes"
+  );
 
-  function addLike(postId: string) {
-    if (!likedPosts.includes(postId)) {
-      setLikedPosts((cur: string[]) => [...cur, postId]);
+  function addReaction(postId: string, type: string) {
+    if (type === "like") {
+      if (!likedPosts.includes(postId)) {
+        setLikedPosts((cur: string[]) => [...cur, postId]);
+      }
+    }
+
+    if (type === "dislike") {
+      if (!dislikedPosts.includes(postId)) {
+        setDislikedPosts((cur: string[]) => [...cur, postId]);
+      }
     }
   }
 
-  function removeLike(postId: string) {
-    if (likedPosts.includes(postId)) {
-      setLikedPosts((cur: string[]) =>
-        cur.filter((curItem) => curItem !== postId)
-      );
+  function removeReaction(postId: string, type: string) {
+    if (type === "like") {
+      if (likedPosts.includes(postId)) {
+        setLikedPosts((cur: string[]) =>
+          cur.filter((curItem) => curItem !== postId)
+        );
+      }
+    }
+
+    if (type === "dislike") {
+      if (dislikedPosts.includes(postId)) {
+        setDislikedPosts((cur: string[]) =>
+          cur.filter((curItem) => curItem !== postId)
+        );
+      }
     }
   }
 
   return (
     <UserContext.Provider
-      value={{ currentUser, likedPosts, addLike, removeLike }}
+      value={{
+        currentUser,
+        likedPosts,
+        dislikedPosts,
+        addReaction,
+        removeReaction,
+      }}
     >
       {children}
     </UserContext.Provider>

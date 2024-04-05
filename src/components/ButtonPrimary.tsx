@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import styles from "./ButtonPrimary.module.css";
 
 interface ButtonProps {
   type: "button" | "submit" | "reset";
@@ -6,16 +7,16 @@ interface ButtonProps {
   children: ReactNode;
 }
 
-function Button({
+function ButtonPrimary({
   type = "button",
   variant = "default",
   children,
 }: ButtonProps) {
   return (
-    <button className={`button button--${variant}`} type={type}>
+    <button className={[styles.button, styles[variant]].join(" ")} type={type}>
       {children}
     </button>
   );
 }
 
-export default Button;
+export default ButtonPrimary;

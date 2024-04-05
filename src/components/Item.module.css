@@ -1,0 +1,10 @@
+.item {
+  display: grid;
+  gap: 16px;
+}
+
+@media (width >= 768px) {
+  .item {
+    gap: 20px;
+  }
+}

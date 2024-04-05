@@ -1,10 +1,10 @@
-import Comments from "./components/Comments";
+import List from "./components/List";
 
 function App() {
   return (
     <main>
       <h1 className="sr-only">Interactive comments section</h1>
-      <Comments />
+      <List />
     </main>
   );
 }

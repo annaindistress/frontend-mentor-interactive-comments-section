@@ -25,6 +25,8 @@
 :root {
   --moderate-blue: hsl(238, 40%, 52%);
   --light-grayish-blue: hsl(239, 57%, 85%);
+  --soft-red: hsl(358, 79%, 66%);
+  --pale-red: hsl(357, 100%, 86%);
   --dark-blue: hsl(212, 24%, 26%);
   --grayish-blue: hsl(211, 10%, 45%);
   --light-gray: hsl(223, 19%, 93%);
@@ -62,6 +64,8 @@ body {
 }
 
 .container {
+  display: grid;
+  gap: 16px;
   width: 100%;
   max-width: 730px;
   margin-inline: auto;
@@ -73,70 +77,17 @@ body {
   border-radius: 8px;
 }
 
-.form {
+.list {
   display: grid;
-  grid-template-columns: 32px 1fr;
   gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.textarea {
-  grid-column: 1 / -1;
-  min-height: 96px;
-  padding: 12px 24px;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: var(--dark-blue);
-  border: 1px solid var(--light-gray);
-  border-radius: 8px;
-  outline: none;
-  resize: none;
-}
-
-.textarea:focus-visible {
-  border-color: var(--moderate-blue);
-}
-
-.textarea::placeholder {
-  color: var(--grayish-blue);
-}
-
-.avatar {
-  display: flex;
-  align-items: center;
-}
-
-.avatar img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.button {
-  align-self: center;
-  min-width: 104px;
-  padding: 12px;
-  font-family: inherit;
-  font-weight: 500;
-  font-size: inherit;
-  line-height: inherit;
-  text-transform: uppercase;
-  color: var(--white);
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-  outline: none;
-}
-
-.button--success {
-  background-color: var(--moderate-blue);
-}
-
-.button--success:focus-visible {
-  background-color: var(--light-grayish-blue);
-}
-
-.button--danger {
+.list--inner {
+  padding-left: 16px;
+  border-left: 2px solid var(--light-gray);
 }
 
 @media (width >= 768px) {
@@ -144,35 +95,20 @@ body {
     padding: 64px 32px;
   }
 
+  .container {
+    gap: 20px;
+  }
+
   .item-container {
     padding: 24px;
   }
 
-  .form {
-    grid-template-columns: 32px 1fr max-content;
+  .list {
+    gap: 20px;
   }
 
-  .textarea {
-    grid-column: 2 / span 1;
-  }
-
-  .avatar {
-    grid-column: 1 / span 1;
-    grid-row: 1 / span 1;
-    align-items: start;
-  }
-
-  .button {
-    align-self: start;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .textarea:hover {
-    border-color: var(--moderate-blue);
-  }
-
-  .button--success:hover {
-    background-color: var(--light-grayish-blue);
+  .list--inner {
+    margin-left: 43px;
+    padding-left: 43px;
   }
 }

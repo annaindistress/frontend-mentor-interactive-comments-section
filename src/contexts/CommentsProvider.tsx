@@ -1,46 +1,38 @@
 import { ReactNode, createContext, useContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { Comment } from "../types/CommentTypes";
 import commentsData from "../assets/comments";
 
 interface Context {
   comments: Comment[];
-  addComment(data: OriginalComment): void;
+  addComment(data: Comment): void;
+  deleteComment(id: string): void;
 }
 
 interface ProviderProps {
   children: ReactNode;
 }
 
-interface Comment {
-  id: string;
-  content: string;
-  createdAt: string;
-  score: number;
-  username: string;
-}
-
-interface ReplyComment extends Comment {
-  replyingTo: string;
-}
-
-interface OriginalComment extends Comment {
-  replies: ReplyComment[] | [];
-}
-
 const CommentsContext = createContext<Context | null>(null);
 
 function CommentsProvider({ children }: ProviderProps) {
-  const [comments, setComments] = useLocalStorage<OriginalComment[]>(
+  const [comments, setComments] = useLocalStorage<Comment[]>(
     commentsData,
     "comments"
   );
 
-  function addComment(data: OriginalComment) {
-    setComments((cur: OriginalComment[]) => [...cur, data]);
+  function addComment(data: Comment) {
+    setComments((cur: Comment[]) => [...cur, data]);
+  }
+
+  function deleteComment(id: string) {
+    setComments((cur: Comment[]) =>
+      cur.filter((item: Comment) => item.id !== id)
+    );
   }
 
   return (
-    <CommentsContext.Provider value={{ comments, addComment }}>
+    <CommentsContext.Provider value={{ comments, addComment, deleteComment }}>
       {children}
     </CommentsContext.Provider>
   );

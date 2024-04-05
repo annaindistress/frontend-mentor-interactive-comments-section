@@ -1,0 +1,18 @@
+.avatar {
+  display: flex;
+  align-items: center;
+}
+
+.avatar img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (width >= 768px) {
+  .avatar {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    align-items: start;
+  }
+}

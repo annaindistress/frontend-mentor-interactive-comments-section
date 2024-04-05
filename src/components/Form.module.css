@@ -1,0 +1,43 @@
+.form {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 16px;
+}
+
+.textarea {
+  grid-column: 1 / -1;
+  min-height: 96px;
+  padding: 12px 24px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: var(--dark-blue);
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  outline: none;
+  resize: none;
+}
+
+.textarea:focus-visible {
+  border-color: var(--moderate-blue);
+}
+
+.textarea::placeholder {
+  color: var(--grayish-blue);
+}
+
+@media (width >= 768px) {
+  .form {
+    grid-template-columns: 32px 1fr max-content;
+  }
+
+  .textarea {
+    grid-column: 2 / span 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .textarea:hover {
+    border-color: var(--moderate-blue);
+  }
+}

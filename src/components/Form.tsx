@@ -1,13 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useComments } from "../contexts/CommentsProvider";
 import { useUser } from "../contexts/UserProvider";
-import Button from "./Button";
+import Avatar from "./Avatar";
+import ButtonPrimary from "./ButtonPrimary";
+import styles from "./Form.module.css";
 
 function Form() {
   const [message, setMessage] = useState<string>("");
   const { currentUser } = useUser();
   const { addComment } = useComments();
-  const imgUrl = `/frontend-mentor-interactive-comments-section/images/avatars/${currentUser}`;
 
   function handleInput(event: ChangeEvent<HTMLTextAreaElement>) {
     setMessage(event.target.value);
@@ -30,26 +31,17 @@ function Form() {
   }
 
   return (
-    <form className="item-container form" onSubmit={handleSubmit}>
+    <form className={`item-container ${styles.form}`} onSubmit={handleSubmit}>
       <textarea
-        className="textarea"
+        className={styles.textarea}
         placeholder="Add a comment…"
         value={message}
         onChange={handleInput}
       ></textarea>
-      <picture className="avatar">
-        <source type="image/webp" srcSet={`${imgUrl}.webp`} />
-        <img
-          src={`${imgUrl}.png`}
-          alt={`${currentUser}'s avatar`}
-          width="32"
-          height="32"
-          title={currentUser}
-        />
-      </picture>
-      <Button type="submit" variant="success">
+      <Avatar username={currentUser} />
+      <ButtonPrimary type="submit" variant="success">
         Send
-      </Button>
+      </ButtonPrimary>
     </form>
   );
 }

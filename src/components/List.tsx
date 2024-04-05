@@ -1,16 +1,20 @@
 import { useComments } from "../contexts/CommentsProvider";
-import { useUser } from "../contexts/UserProvider";
+import Item from "./Item";
 import Form from "./Form";
 
-function Comments() {
-  const { currentUser, likedPosts, addLike, removeLike } = useUser();
+function List() {
   const { comments } = useComments();
 
   return (
     <section className="container">
-      <ul className="list"></ul>
+      <ul className="list">
+        {comments.map((comment) => (
+          <Item key={comment.id} comment={comment} />
+        ))}
+      </ul>
       <Form />
     </section>
   );
 }
 
+export default List;
