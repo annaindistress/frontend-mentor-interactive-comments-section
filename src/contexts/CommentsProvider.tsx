@@ -7,6 +7,7 @@ interface Context {
   comments: Comment[];
   addComment(data: Comment): void;
   deleteComment(id: string): void;
+  updateComment(id: string, payload: string | number): void;
 }
 
 interface ProviderProps {
@@ -31,8 +32,26 @@ function CommentsProvider({ children }: ProviderProps) {
     );
   }
 
+  function updateComment(id: string, payload: string | number) {
+    const newData = comments.map((comment: Comment) => {
+      if (comment.id === id) {
+        if (typeof payload === "string") {
+          comment.content = payload;
+        }
+
+        if (typeof payload === "number") {
+          comment.score += payload;
+        }
+      }
+      return comment;
+    });
+    setComments(newData);
+  }
+
   return (
-    <CommentsContext.Provider value={{ comments, addComment, deleteComment }}>
+    <CommentsContext.Provider
+      value={{ comments, addComment, deleteComment, updateComment }}
+    >
       {children}
     </CommentsContext.Provider>
   );

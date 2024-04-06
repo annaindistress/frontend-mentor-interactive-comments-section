@@ -2,6 +2,7 @@ import { useUser } from "../contexts/UserProvider";
 import Plus from "../assets/icons/plus.svg?react";
 import Minus from "../assets/icons/minus.svg?react";
 import styles from "./Likes.module.css";
+import { useComments } from "../contexts/CommentsProvider";
 
 interface LikesProps {
   id: string;
@@ -10,25 +11,26 @@ interface LikesProps {
 
 function Likes({ id, score }: LikesProps) {
   const { likedPosts, dislikedPosts, addReaction, removeReaction } = useUser();
+  const { updateComment } = useComments();
   const isLiked = likedPosts.includes(id);
   const isDisliked = dislikedPosts.includes(id);
 
+  function handleReaction(value: number) {
+    removeReaction(id, "like");
+    removeReaction(id, "dislike");
+    updateComment(id, value);
+  }
+
   function handleLike() {
-    if (!isLiked) {
-      removeReaction(id, "dislike");
-      addReaction(id, "like");
-    } else {
-      removeReaction(id, "like");
-    }
+    const value = isDisliked ? 2 : isLiked ? -1 : 1;
+    handleReaction(value);
+    addReaction(id, "like");
   }
 
   function handleDislike() {
-    if (!isDisliked) {
-      removeReaction(id, "like");
-      addReaction(id, "dislike");
-    } else {
-      removeReaction(id, "dislike");
-    }
+    const value = isLiked ? -2 : isDisliked ? 1 : -1;
+    handleReaction(value);
+    addReaction(id, "dislike");
   }
 
   return (
