@@ -52,12 +52,13 @@ function Post({
         <article className={`item-container ${styles.post}`}>
           <header className={styles.header}>
             <Avatar username={username} />
-            <span className={styles.username}>
+            <h2 className={styles.username}>
+              <span className="sr-only">Comment by </span>
               {username}
               {username === currentUser && (
                 <span className={styles.author}>you</span>
               )}
-            </span>
+            </h2>
             <span>{getDate(createdAt)}</span>
           </header>
           {isEdit ? (
