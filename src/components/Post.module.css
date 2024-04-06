@@ -1,3 +1,8 @@
+.formContainer {
+  display: grid;
+  gap: 8px;
+}
+
 .post {
   display: grid;
   grid-template-columns: max-content 1fr;

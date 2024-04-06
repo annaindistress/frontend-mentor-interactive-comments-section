@@ -1,18 +1,25 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useComments } from "../contexts/CommentsProvider";
 import { useUser } from "../contexts/UserProvider";
 import Avatar from "./Avatar";
+import Textarea from "./Textarea";
 import ButtonPrimary from "./ButtonPrimary";
-import styles from "./Form.module.css";
+import styles from "./FormCreate.module.css";
 
-function Form() {
+interface FormCreateProps {
+  replyingTo?: string;
+  parentComment?: string;
+  onSubmit?: () => void;
+}
+
+function FormCreate({
+  replyingTo = "",
+  parentComment = "",
+  onSubmit = () => null,
+}: FormCreateProps) {
   const [message, setMessage] = useState<string>("");
   const { currentUser } = useUser();
   const { addComment } = useComments();
-
-  function handleInput(event: ChangeEvent<HTMLTextAreaElement>) {
-    setMessage(event.target.value);
-  }
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -23,28 +30,29 @@ function Form() {
       createdAt: new Date().toString(),
       score: 0,
       username: currentUser,
-      replyingTo: "",
-      parentComment: "",
+      replyingTo: replyingTo,
+      parentComment: parentComment,
     };
 
     addComment(comment);
     setMessage("");
+    onSubmit();
   }
 
   return (
     <form className={`item-container ${styles.form}`} onSubmit={handleSubmit}>
-      <textarea
+      <Textarea
         className={styles.textarea}
-        placeholder="Add a comment…"
+        nickname={replyingTo}
         value={message}
-        onChange={handleInput}
-      ></textarea>
+        setValue={setMessage}
+      />
       <Avatar username={currentUser} />
-      <ButtonPrimary type="submit" variant="success">
-        Send
+      <ButtonPrimary type="submit" variant="success" className={styles.button}>
+        {replyingTo !== "" ? "Reply" : "Send"}
       </ButtonPrimary>
     </form>
   );
 }
 
-export default Form;
+export default FormCreate;

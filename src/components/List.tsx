@@ -1,6 +1,6 @@
 import { useComments } from "../contexts/CommentsProvider";
 import Item from "./Item";
-import Form from "./Form";
+import FormCreate from "./FormCreate";
 
 function List() {
   const { comments } = useComments();
@@ -12,7 +12,7 @@ function List() {
           <Item key={comment.id} comment={comment} />
         ))}
       </ul>
-      <Form />
+      <FormCreate />
     </section>
   );
 }

@@ -36,6 +36,7 @@ function Item({ comment }: CommentsItemProps) {
                     score={reply.score}
                     username={reply.username}
                     replyingTo={reply.replyingTo}
+                    parentComment={reply.parentComment}
                   />
                 </li>
               ))}
