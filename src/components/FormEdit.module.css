@@ -1,0 +1,21 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  grid-template-rows: repeat(2, max-content);
+  gap: 16px;
+  grid-column: 1 / -1;
+}
+
+.textarea {
+  grid-column: 1 / -1;
+}
+
+.button {
+  grid-column: 2 / -1;
+}
+
+@media (width >= 768px) {
+  .form {
+    grid-column: 2 / 4;
+  }
+}

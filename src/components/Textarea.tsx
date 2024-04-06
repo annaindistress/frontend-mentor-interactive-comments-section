@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useAutosizeTextarea } from "../hooks/useAutosizeTextarea";
 import styles from "./Textarea.module.css";
 
 interface TextareaProps {
@@ -14,8 +15,10 @@ function Textarea({
   value,
   setValue,
 }: TextareaProps) {
-  const [width, setWidth] = useState(0);
+  const [widthNickname, setWidthNickname] = useState(0);
   const nicknameRef = useRef<HTMLSpanElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  useAutosizeTextarea(textareaRef.current, value);
 
   function handleInput(event: ChangeEvent<HTMLTextAreaElement>) {
     setValue(event.target.value);
@@ -24,7 +27,7 @@ function Textarea({
   useEffect(function () {
     if (nicknameRef.current !== null) {
       const size = nicknameRef.current.getBoundingClientRect();
-      setWidth(size.width);
+      setWidthNickname(size.width);
     }
   }, []);
 
@@ -37,11 +40,18 @@ function Textarea({
       )}
       <textarea
         className={[styles.textarea, className].join(" ")}
+        style={{ textIndent: `${widthNickname}px` }}
         placeholder={nickname !== "" ? "" : "Add a comment…"}
+        ref={textareaRef}
         value={value}
         onChange={handleInput}
-        style={{ textIndent: `${width}px` }}
-      ></textarea>
+      >
+        {nickname !== "" && (
+          <span className={styles.nickname} ref={nicknameRef}>
+            @{nickname}
+          </span>
+        )}
+      </textarea>
     </div>
   );
 }

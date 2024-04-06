@@ -24,6 +24,8 @@ function FormCreate({
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
+    if (message === "") return;
+
     const comment = {
       id: crypto.randomUUID(),
       content: message,

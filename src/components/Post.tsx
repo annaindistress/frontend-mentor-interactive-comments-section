@@ -9,6 +9,7 @@ import Avatar from "./Avatar";
 import ButtonSecondary from "./ButtonSecondary";
 import Likes from "./Likes";
 import FormCreate from "./FormCreate";
+import FormEdit from "./FormEdit";
 import styles from "./Post.module.css";
 
 interface PostProps {
@@ -33,6 +34,11 @@ function Post({
   const { currentUser } = useUser();
   const { deleteComment } = useComments();
   const [isReply, setIsReply] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
+  function handleUpdate() {
+    setIsEdit(false);
+  }
 
   return (
     <div className={styles.formContainer}>
@@ -47,16 +53,27 @@ function Post({
           </span>
           <span>{getDate(createdAt)}</span>
         </header>
-        <p className={styles.message}>
-          {replyingTo !== "" && (
-            <span
-              className={[styles.username, styles["username--reply"]].join(" ")}
-            >
-              @{replyingTo}
-            </span>
-          )}
-          {content}
-        </p>
+        {isEdit ? (
+          <FormEdit
+            id={id}
+            content={content}
+            replyingTo={replyingTo}
+            onSubmit={handleUpdate}
+          />
+        ) : (
+          <p className={styles.message}>
+            {replyingTo !== "" && (
+              <span
+                className={[styles.username, styles["username--reply"]].join(
+                  " "
+                )}
+              >
+                @{replyingTo}
+              </span>
+            )}
+            {content}
+          </p>
+        )}
         <Likes id={id} score={score} />
         <div className={styles.controls}>
           {currentUser === username ? (
@@ -68,7 +85,7 @@ function Post({
                 <Delete />
                 Delete
               </ButtonSecondary>
-              <ButtonSecondary>
+              <ButtonSecondary onClick={() => setIsEdit(true)}>
                 <Edit />
                 Edit
               </ButtonSecondary>
