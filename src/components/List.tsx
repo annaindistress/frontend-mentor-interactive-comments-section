@@ -7,6 +7,7 @@ function List() {
 
   return (
     <section className="container">
+      <h2 className="sr-only">Comments</h2>
       <ul className="list">
         {comments.map((comment) => (
           <Item key={comment.id} comment={comment} />
