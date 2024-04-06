@@ -23,7 +23,8 @@ function Form() {
       createdAt: new Date().toString(),
       score: 0,
       username: currentUser,
-      replies: [],
+      replyingTo: "",
+      parentComment: "",
     };
 
     addComment(comment);
